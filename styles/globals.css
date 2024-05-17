@@ -77,10 +77,10 @@
 
   /* Header Glassmorphism effect */
   .header-glassmorphism {
-    backdrop-filter: blur(2px) saturate(70%);
-    -webkit-backdrop-filter: blur(2px) saturate(70%);
-    background-color: rgba(255, 255, 255, 0.48);
-    border: 1px solid rgba(209, 213, 219, 0.3);
+    backdrop-filter: blur(25px) saturate(151%);
+    -webkit-backdrop-filter: blur(25px) saturate(151%);
+    background-color: rgba(255, 255, 255, 0.89);
+    border: 1px solid rgba(255, 255, 255, 0.125);
   }
 
   .header-glassmorphism.dark {
@@ -89,5 +89,76 @@
     background-color: rgba(0, 0, 0, 0.85);
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.125);
+  }
+
+  /* Scroll down */
+  .arrows {
+    width: 60px;
+    height: 72px;
+  }
+
+  .arrows path {
+    stroke: #212121;
+    fill: transparent;
+    stroke-width: 1px;
+    animation: arrow 2s infinite;
+    -webkit-animation: arrow 2s infinite;
+  }
+
+  @keyframes arrow {
+    0% {
+      opacity: 0
+    }
+
+    40% {
+      opacity: 1
+    }
+
+    80% {
+      opacity: 0
+    }
+
+    100% {
+      opacity: 0
+    }
+  }
+
+  @-webkit-keyframes arrow
+
+  /*Safari and Chrome*/
+    {
+    0% {
+      opacity: 0
+    }
+
+    40% {
+      opacity: 1
+    }
+
+    80% {
+      opacity: 0
+    }
+
+    100% {
+      opacity: 0
+    }
+  }
+
+  .arrows path.a1 {
+    animation-delay: -1s;
+    -webkit-animation-delay: -1s;
+    /* Safari 和 Chrome */
+  }
+
+  .arrows path.a2 {
+    animation-delay: -0.5s;
+    -webkit-animation-delay: -0.5s;
+    /* Safari 和 Chrome */
+  }
+
+  .arrows path.a3 {
+    animation-delay: 0s;
+    -webkit-animation-delay: 0s;
+    /* Safari 和 Chrome */
   }
 }
