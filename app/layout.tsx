@@ -8,6 +8,7 @@ import "@/styles/globals.css";
 import ClerkAuthenticationProvider from "@/lib/clerk-convex-provider";
 import { ThemeProvider } from "@/lib/theme-provider";
 import { cn } from "@/lib/utils";
+import { LenisProvider } from "@/lib/LenisProvider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
+        <LenisProvider>
           <ClerkAuthenticationProvider>
             <ThemeProvider
               attribute="class"
@@ -42,6 +44,7 @@ export default function RootLayout({
               {children}
             </ThemeProvider>
           </ClerkAuthenticationProvider>
+        </LenisProvider>
       </body>
     </html>
   );

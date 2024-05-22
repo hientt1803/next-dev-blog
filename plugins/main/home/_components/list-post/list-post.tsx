@@ -46,12 +46,12 @@ const listPost = [
 export const ListPost = () => {
   return (
     <div id="list-post-home" className="flex-[2] mt-16">
-      <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-4">
+      <h4 className="scroll-m-20 text-2xl font-semibold tracking-tight mb-4">
         DISCOVER NEW POST HERE
       </h4>
-      <div className="grid grid-cols-1">
+      <div className="grid grid-cols-1 gap-6">
         {listPost.map((post, index) => (
-          <PostItem key={index} />
+          <PostItem key={index} post={post} />
         ))}
       </div>
     </div>

@@ -40,7 +40,7 @@ export const PostCategories = () => {
           <ComboboxFilter />
         </div>
       </div>
-      <div className="bg-white dark:bg-[#212121] rounded-md z-20">
+      <div className="bg-white dark:bg-[#212121] rounded-md mt-1 z-20 sticky top-14 left-0 right-0">
         <ScrollArea className="w-full whitespace-nowrap rounded-md border-0 shadown-sm">
           <div className="flex w-max space-x-4 p-4">
             {categories.map((item, index) => {

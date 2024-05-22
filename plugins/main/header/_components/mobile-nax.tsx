@@ -51,14 +51,14 @@ export default function MobileNav() {
               <NavigationMenuItem>
                 <Link
                   className="px-0"
-                  href="/list-posts"
+                  href="/posts"
                   legacyBehavior
                   passHref
                 >
                   <NavigationMenuLink
                     className={cn(navigationMenuTriggerStyle(), "text-5xl")}
                   >
-                    List Posts
+                    Posts
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>

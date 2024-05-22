@@ -20,9 +20,9 @@ export function HeaderNavigationMenu() {
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/list-posts" className="bg-neutral-300" legacyBehavior passHref>
+          <Link href="/posts" className="bg-neutral-300" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              List Posts
+              Posts
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

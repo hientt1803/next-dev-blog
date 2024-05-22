@@ -19,7 +19,7 @@ export const Footer = () => {
       <footer>
         <motion.div
           style={{ y }}
-          className="flex justify-between items-center gap-16 flex-wrap"
+          className="container flex justify-center md:justify-between items-center gap-16 flex-wrap"
         >
           <div className="flex-1 flex flex-col gap-3">
             <Link
@@ -42,7 +42,7 @@ export const Footer = () => {
               <ul>
                 <li className="list-item">
                   <Link
-                    href="/"
+                    href="https://tranhien-portfolio.vercel.app/"
                     className="text-md tracking-tight font-mono text-muted-foreground"
                   >
                     Portfolio
@@ -50,7 +50,7 @@ export const Footer = () => {
                 </li>
                 <li className="list-item">
                   <Link
-                    href="/"
+                    href="https://www.linkedin.com/in/hi%E1%BA%BFn-tr%E1%BA%A7n-49b774256/"
                     className="text-md tracking-tight font-mono text-muted-foreground"
                   >
                     LinkedIn
@@ -58,7 +58,7 @@ export const Footer = () => {
                 </li>
                 <li className="list-item">
                   <Link
-                    href="/"
+                    href="https://github.com/hientt1803"
                     className="text-md tracking-tight font-mono text-muted-foreground"
                   >
                     Github
@@ -66,7 +66,7 @@ export const Footer = () => {
                 </li>
                 <li className="list-item">
                   <Link
-                    href="/mailto:tronghientran18@gmail.com"
+                    href="mailto:tronghientran18@gmail.com"
                     className="text-md tracking-tight font-mono text-muted-foreground"
                   >
                     Gmail
@@ -89,7 +89,7 @@ export const Footer = () => {
                 </li>
                 <li className="list-item">
                   <Link
-                    href="/"
+                    href="/posts"
                     className="text-md tracking-tight font-mono text-muted-foreground"
                   >
                     Posts
@@ -97,7 +97,7 @@ export const Footer = () => {
                 </li>
                 <li className="list-item">
                   <Link
-                    href="/"
+                    href="/create-post"
                     className="text-md tracking-tight font-mono text-muted-foreground"
                   >
                     Create Posts
@@ -114,7 +114,7 @@ export const Footer = () => {
   return (
     <div
       ref={container}
-      className="bg-black w-full flex justify-center items-center overflow-hidden mt-[100px] h-[250px] px-10"
+      className="bg-black w-full flex justify-center items-center overflow-hidden mt-[100px] h-[550px] md:h-[350px] lg:h-[300px] px-10"
     >
       {RenderFooter({ scrollProgress: scrollYProgress })}
     </div>

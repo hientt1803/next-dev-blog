@@ -47,7 +47,7 @@ const listPost = [
 export const ListHostPost = () => {
   return (
     <div className="flex-1 mt-16">
-      <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-4">
+      <h4 className="scroll-m-20 text-2xl font-semibold tracking-tight mb-4">
         HOT POST
       </h4>
       <div className="grid grid-cols-1">

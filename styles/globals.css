@@ -161,4 +161,23 @@
     -webkit-animation-delay: 0s;
     /* Safari 和 Chrome */
   }
+
+  /* Button effect */
+  .button-blog-effect {
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(to right, #212121 50%, transparent 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    border: 1px solid #000;
+    color: #000;
+    padding: 5px 10px;
+    font-weight: 500;
+    transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  .button-blog-effect:hover {
+    background-position: left bottom;
+    color: #f1f1f1;
+  }
 }
