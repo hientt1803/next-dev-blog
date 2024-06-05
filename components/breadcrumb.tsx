@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -20,15 +18,11 @@ export const PageBreadcrumb = ({
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink>
-            <Link href="/">Home</Link>
-          </BreadcrumbLink>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink>
-            <Link href={`/${segment}`}>{segment}</Link>
-          </BreadcrumbLink>
+          <BreadcrumbLink href={`/${segment}`}>{segment}</BreadcrumbLink>
         </BreadcrumbItem>
         {page && (
           <>

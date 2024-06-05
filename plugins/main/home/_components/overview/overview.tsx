@@ -23,7 +23,7 @@ export const Overview = () => {
           </Button>
         </Link>
       </div>
-      <div className="mt-14">
+      <div>
         <OverviewImageBanner/>
       </div>
     </div>

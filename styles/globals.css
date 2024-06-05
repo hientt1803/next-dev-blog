@@ -180,4 +180,8 @@
     background-position: left bottom;
     color: #f1f1f1;
   }
+
+  .dark-blog-content>* {
+    color: #f1f1f1 !important;
+  }
 }

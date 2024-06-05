@@ -19,7 +19,7 @@ export const OverviewImageBanner = () => {
   return (
     <div
       ref={container}
-      className="w-full flex justify-center items-center overflow-hidden mt-[100px] h-auto px-10"
+      className="w-full flex justify-center items-center overflow-hidden mt-[30px] h-auto px-10"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 mt-4 gap-4 h-[800px]">
         <div className="flex flex-col gap-4">

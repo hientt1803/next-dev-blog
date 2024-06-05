@@ -3,12 +3,16 @@ import { Inter as FontSans } from "next/font/google";
 
 // CSS
 import "@/styles/globals.css";
+import "@/styles/mdx-editor.css";
+import "@mdxeditor/editor/style.css";
 
 // provider
 import ClerkAuthenticationProvider from "@/lib/clerk-convex-provider";
 import { ThemeProvider } from "@/lib/theme-provider";
 import { cn } from "@/lib/utils";
 import { LenisProvider } from "@/lib/LenisProvider";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -33,18 +37,20 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <LenisProvider>
-          <ClerkAuthenticationProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
-          </ClerkAuthenticationProvider>
-        </LenisProvider>
+        <Suspense fallback={<Loading />}>
+          <LenisProvider>
+            <ClerkAuthenticationProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                {children}
+              </ThemeProvider>
+            </ClerkAuthenticationProvider>
+          </LenisProvider>
+        </Suspense>
       </body>
     </html>
   );

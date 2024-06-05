@@ -50,7 +50,7 @@ export const CategoriesList = () => {
   return (
     <div className="grid grid-cols-1 gap-5 sticky top-16 right-0 transition-all">
       <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-        Filter for what you need!
+        Search for what you need!
       </h4>
       <div className="flex justify-end w-full max-w-sm items-center space-x-2">
         <Input
