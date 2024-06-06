@@ -2,7 +2,6 @@
 
 import { ReactNode } from "react";
 
-// Scroll animation
 import Lenis from "@studio-freight/lenis";
 import { useEffect } from "react";
 

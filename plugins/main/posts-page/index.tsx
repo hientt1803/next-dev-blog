@@ -2,6 +2,7 @@ import { PageBreadcrumb } from "@/components/breadcrumb";
 import Link from "next/link";
 import { CategoriesList } from "./_components/categories-list";
 import { ListPost } from "./_components/list-post";
+import ListTags from "./_components/tags/list-tags";
 
 const PostPage = async () => {
   return (
@@ -21,6 +22,9 @@ const PostPage = async () => {
           </Link>{" "}
           and share your knowledge.
         </h1>
+        <div className="max-w-[45rem] mx-auto px-auto">
+          <ListTags />
+        </div>
         <div className="grid grid-flow-row-dense grid-cols-3 gap-8 relative">
           <div className="col-span-2">
             <ListPost />

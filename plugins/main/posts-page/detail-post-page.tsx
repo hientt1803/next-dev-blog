@@ -1,49 +1,34 @@
 import { PageBreadcrumb } from "@/components/breadcrumb";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { IPosts } from "@/types";
 import { LeftSide } from "./_components/comments/left-side";
 import { ListComment } from "./_components/comments/list-comment";
 import { ShowDetailPostContent } from "./_components/detail/detail-post-content";
 import { ListRelativePost } from "./_components/relative-posts/list-relative-post";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { IPosts, POST_STATUS } from "@/types";
-import { fetchQuery } from "convex/nextjs";
-import { api } from "@/convex/_generated/api";
+
+const fetchPosts = async (slug: string) => {
+  const posts = await fetch(`http://localhost:3000/api/posts/${slug}`, {
+    next: { revalidate: 60 },
+  });
+  const data = await posts.json();
+  return data;
+};
 
 export const DetailPostPage = async ({
   params,
 }: {
   params: { slug: string };
 }) => {
-  const post = await fetchQuery(api.posts.getPostBySlug, {
-    slug: params.slug,
-  });
-
-  if (!post) {
-    return null;
-  }
-
-  const convertedPost: IPosts = {
-    _id: post._id,
-    slug: post.slug,
-    title: post.title,
-    excerpt: post.excerpt,
-    desc: post.desc,
-    views: post.views,
-    status: POST_STATUS[post.status.toUpperCase() as keyof typeof POST_STATUS],
-    _creationTime: post._creationTime,
-    image: post.image,
-    user_id: post.user_id,
-    cat_id: post.cat_id,
-    tag_id: post.tag_id,
-  };
+  const post: IPosts = await fetchPosts(params.slug);
 
   return (
     <div className="mt-[50px]">
       <div className="mb-8">
-        <PageBreadcrumb segment="posts" page={`${convertedPost.slug}`} />
+        <PageBreadcrumb segment="posts" page={`${post.slug}`} />
       </div>
       {/* <DetailTitle slug={params.slug} /> */}
       <h1 className="scroll-m-20 text-4xl font-mono text-start tracking-tight my-16">
-        {convertedPost.slug}
+        {post.title}
       </h1>
       <div className="d-flex justify-start gap-3 mb-10">
         <div className="flex justify-start items-center gap-3">
@@ -62,17 +47,17 @@ export const DetailPostPage = async ({
         </div>
       </div>
       <div className="text-start">
-        <ShowDetailPostContent markdown={convertedPost.desc} />
+        <ShowDetailPostContent markdown={post.desc} />
       </div>
       <hr />
       <h2 className="scroll-m-20 text-3xl font-mono font-semibold text-start mt-16">
         Leave a comment if you like this article!
       </h2>
-      <div className="comments mt-8 grid grid-flow-col-1 lg:grid-cols-12 justify-center lg:justify-start gap-5 relative">
-        <div className="col-span-1 md:col-span-4">
+      <div className="comments mt-8 grid grid-flow-col-1 md:grid-cols-12 justify-center lg:justify-start gap-5 relative">
+        <div className="col-span-1 md:col-span-6 lg:col-span-4">
           <LeftSide />
         </div>
-        <div className="col-span-1 md:col-span-8">
+        <div className="col-span-1 md:col-span-6 lg:col-span-8">
           <ListComment />
         </div>
       </div>

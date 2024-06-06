@@ -4,8 +4,6 @@ import { MDXEditorMethods } from "@mdxeditor/editor";
 import React, { Suspense, useEffect, useState } from "react";
 import { ForwardRefEditor } from "./_components/Forward-ref-editor";
 import { TopControl } from "./_components/top-control";
-import { useMutation } from "convex/react";
-import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 
 const admonitionMarkdown = `
@@ -13,8 +11,6 @@ const admonitionMarkdown = `
 `;
 
 export const CreatePostPageIndex = () => {
-  const createPost = useMutation(api.posts.createPosts);
-
   const [mounted, setMounted] = useState(false);
   const ref = React.useRef<MDXEditorMethods>(null);
 
@@ -37,21 +33,23 @@ export const CreatePostPageIndex = () => {
     tagId?: Id<"tags">
   ) => {
     if (message !== "") {
-      alert(message);
+      alert("Please provide title for this article");
       return;
     }
 
-    try {
-      await createPost({
-        title: value,
-        excerpt: value,
-        desc: String(ref.current?.getMarkdown()),
-      });
+    const data = {
+      title: value,
+      desc: String(ref.current?.getMarkdown()),
+      catId,
+      tagId,
+    };
+    alert("clicked");
+    await fetch("http://localhost:3000/api/posts", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
 
-      alert("create completed");
-    } catch (error) {
-      alert("create fail");
-    }
+    alert("created");
   };
 
   return (

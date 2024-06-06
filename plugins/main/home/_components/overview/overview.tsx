@@ -23,9 +23,10 @@ export const Overview = () => {
           </Button>
         </Link>
       </div>
-      <div>
+      {/* Image banner */}
+      {/* <div>
         <OverviewImageBanner/>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -15,13 +15,13 @@ export const PostPageItem = ({ post }: { post: IPosts }) => {
         </Link>
       </div>
       <div className="group relative">
-        <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600 dark:text-neutral-100 line-clamp-3">
+        <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600 dark:text-neutral-200 dark:hover:text-white line-clamp-3">
           <Link href={`/posts/${post.slug}`}>
             <span className="absolute inset-0"></span>
             {post.title}
           </Link>
         </h3>
-        <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 dark:text-gray-300">
+        <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 dark:text-gray-400">
           {post.excerpt}
         </p>
       </div>

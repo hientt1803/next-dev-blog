@@ -1,5 +1,5 @@
 import { defineSchema, defineTable } from "convex/server";
-import { v } from "convex/values";
+import { Infer, v } from "convex/values";
 
 export const roles = v.union(v.literal("admin"), v.literal("user"));
 export const POST_STATUS = v.union(
@@ -7,6 +7,7 @@ export const POST_STATUS = v.union(
   v.literal("published"), 
   v.literal("arcguved")
 );
+export type POST_STATUS_TYPE = Infer<typeof POST_STATUS>;
 export const fileTypes = v.optional(v.literal("image"));
 
 export default defineSchema({

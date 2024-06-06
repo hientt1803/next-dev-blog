@@ -1,11 +1,11 @@
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
+  BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
+import Link from "next/link";
 
 export const PageBreadcrumb = ({
   segment,
@@ -18,11 +18,11 @@ export const PageBreadcrumb = ({
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          <Link href="/">Home</Link>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink href={`/${segment}`}>{segment}</BreadcrumbLink>
+          <Link href={`/${segment}`}>{segment}</Link>
         </BreadcrumbItem>
         {page && (
           <>

@@ -2,11 +2,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { PostPageItem } from "@/plugins/main/posts-page/_components/post-item";
-import { ArrowUpRight } from "lucide-react";
+import { IPosts } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
-export async function PostItem({ post }: { post: any }) {
+export async function PostItem({ post }: { post: IPosts }) {
   return (
     <>
       <Card className="w-full md:shadow-md transition-all shadow-md p-3 hover:shadow-lg border-0 z-10 hidden md:block">
@@ -26,15 +26,13 @@ export async function PostItem({ post }: { post: any }) {
                 <span className="text-muted-foreground">Mar 16,2024</span>
                 <Badge variant="secondary">Marketing</Badge>
               </div>
-              <Link href="/posts/abc">
+              <Link href={`/posts/${post.slug}`}>
                 <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-                  Title here
+                  {post.title}
                 </h4>
               </Link>
               <blockquote className="border-l-2 pl-6 italic line-clamp-3 text-xs">
-                {"After all,"} he said, {"everyone"} enjoys a good joke, so{" "}
-                {"it's"}
-                only fair that they should pay for the privilege{"."}
+                {post.excerpt}
               </blockquote>
               <div className="flex flex-col md:flex-row justify-start items-start text-sm mt-3 md:justify-between">
                 <Button variant={"ghost"} asChild>
@@ -43,13 +41,15 @@ export async function PostItem({ post }: { post: any }) {
                   </Link>
                 </Button>
                 <span className="text-muted-foreground text-xs">
-                  views: 367
+                  views: {post.views}
                 </span>
               </div>
             </div>
           </div>
         </CardContent>
       </Card>
+
+      {/* Mobile view */}
       <div className="block md:hidden">
         <PostPageItem post={post} />
       </div>
