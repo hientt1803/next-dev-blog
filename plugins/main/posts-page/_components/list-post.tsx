@@ -2,8 +2,8 @@ import { IPosts } from "@/types";
 import { PostPageItem } from "./post-item";
 
 const fetchPosts = async () => {
-  const posts = await fetch("http://localhost:3000/api/posts", {
-    next: { revalidate: 60 },
+  const posts = await fetch(`${process.env.API_URL}/api/posts`, {
+    next: { revalidate: 20 },
   });
   const data = await posts.json();
   return data;

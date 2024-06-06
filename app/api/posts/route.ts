@@ -12,21 +12,6 @@ interface IPostReq {
 }
 
 export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const slug = searchParams.get("slug");
-
-  if (slug) {
-    const post: IPosts | null = await fetchQuery(api.posts.getPostBySlug, {
-      slug: slug,
-    });
-
-    if (!post) {
-      return Response.json({ message: "Post not found!", status: 204 });
-    }
-
-    return Response.json({ post });
-  }
-
   const listPosts: IPosts[] = await fetchQuery(api.posts.getAllPost);
   return Response.json(listPosts);
 }

@@ -12,6 +12,8 @@ import { ThemeProvider } from "@/lib/theme-provider";
 import { cn } from "@/lib/utils";
 import { LenisProvider } from "@/lib/LenisProvider";
 import { Suspense } from "react";
+import { Toaster } from "@/components/ui/toaster";
+
 import Loading from "./loading";
 
 const fontSans = FontSans({
@@ -48,6 +50,7 @@ export default function RootLayout({
               >
                 {children}
               </ThemeProvider>
+              <Toaster />
             </ClerkAuthenticationProvider>
           </LenisProvider>
         </Suspense>

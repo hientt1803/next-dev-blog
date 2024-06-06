@@ -23,6 +23,14 @@ export interface IPosts {
   _creationTime: number;
 }
 
+export interface ITags {
+  _id: Id<"tags">;
+  slug: string;
+  name: string;
+  desc: string;
+  _creationTime: number;
+}
+
 export type LayoutProps = {
   children: React.ReactNode;
 };

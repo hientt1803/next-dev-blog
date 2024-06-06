@@ -8,9 +8,15 @@ const listTags = [
   { id: 4, name: "UI/UX" },
   { id: 5, name: "Frontend" },
   { id: 6, name: "Backend" },
+  { id: 7, name: "Javascript" },
+  { id: 8, name: "Typescript" },
+  { id: 9, name: "Java" },
+  { id: 10, name: "UI/UX" },
+  { id: 11, name: "Frontend" },
+  { id: 12, name: "Backend" },
 ];
 
-const ListTags = () => { 
+const ListTags = () => {
   return (
     <div className="flex gap-2 justify-center items-center flex-wrap">
       {listTags.map((tag) => (

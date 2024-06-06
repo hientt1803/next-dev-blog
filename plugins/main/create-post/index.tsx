@@ -5,12 +5,14 @@ import React, { Suspense, useEffect, useState } from "react";
 import { ForwardRefEditor } from "./_components/Forward-ref-editor";
 import { TopControl } from "./_components/top-control";
 import { Id } from "@/convex/_generated/dataModel";
+import { useToast } from "@/components/ui/use-toast";
 
 const admonitionMarkdown = `
   > WRITE YOUR OWN STORY HERE!
 `;
 
 export const CreatePostPageIndex = () => {
+  const { toast } = useToast();
   const [mounted, setMounted] = useState(false);
   const ref = React.useRef<MDXEditorMethods>(null);
 
@@ -43,13 +45,15 @@ export const CreatePostPageIndex = () => {
       catId,
       tagId,
     };
-    alert("clicked");
     await fetch("http://localhost:3000/api/posts", {
       method: "POST",
       body: JSON.stringify(data),
     });
 
-    alert("created");
+    toast({
+      title: "Success: article have been posted successfully",
+      description: new Date().toLocaleDateString(),
+    });
   };
 
   return (

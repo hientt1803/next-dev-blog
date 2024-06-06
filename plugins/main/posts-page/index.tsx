@@ -22,8 +22,13 @@ const PostPage = async () => {
           </Link>{" "}
           and share your knowledge.
         </h1>
-        <div className="max-w-[45rem] mx-auto px-auto">
-          <ListTags />
+        <div className="max-w-[45rem] mx-auto px-auto my-8">
+          <div>
+            <h1 className="scroll-m-20 text-2lg font-bold text-center mx-auto tracking-tight mt-10 mb-4">
+              #Tags
+            </h1>
+            <ListTags />
+          </div>
         </div>
         <div className="grid grid-flow-row-dense grid-cols-3 gap-8 relative">
           <div className="col-span-2">
