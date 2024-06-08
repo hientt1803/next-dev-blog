@@ -6,6 +6,6 @@ export const dynamic = "force-dynamic";
 const Response = NextResponse;
 
 export async function GET(req: NextRequest) {
-    const tags = await fetchQuery(api.tags.getAllTags);
-    return Response.json(tags);
-  }
+  const tags = await fetchQuery(api.tags.getAllTags);
+  return Response.json(tags);
+}

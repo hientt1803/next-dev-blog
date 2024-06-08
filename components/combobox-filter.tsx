@@ -31,11 +31,11 @@ export function ComboboxFilter({ tags }: { tags: ITags[] }) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-[400px] justify-between"
         >
           {value
             ? tags?.find((tag: ITags) => tag.name === value)?.name
-            : "Select tags..."}
+            : "Choose tags you want..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>

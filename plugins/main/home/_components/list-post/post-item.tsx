@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { formatDate } from "@/lib/utils";
 import { PostPageItem } from "@/plugins/main/posts-page/_components/post-item";
 import { IPosts } from "@/types";
 import Image from "next/image";
@@ -26,7 +27,9 @@ export async function PostItem({ post }: { post: IPosts }) {
             </Link>
             <div className="flex-[3] flex flex-col gap-2">
               <div className="flex items-center gap-4 text-xs">
-                <span className="text-muted-foreground">Mar 16,2024</span>
+                <span className="text-muted-foreground">
+                  {formatDate(post._creationTime)}
+                </span>
                 <Badge variant="secondary">Marketing</Badge>
               </div>
               <Link href={`/posts/${post.slug}`}>
@@ -38,7 +41,7 @@ export async function PostItem({ post }: { post: IPosts }) {
                 {post.excerpt}
               </blockquote>
               <div className="flex flex-col md:flex-row justify-start items-start text-sm mt-3 md:justify-between">
-                <Button variant={"ghost"} asChild>
+                <Button variant={"secondary"} asChild>
                   <Link href={`/posts/${post.slug}`} className="underline">
                     Read more...
                   </Link>

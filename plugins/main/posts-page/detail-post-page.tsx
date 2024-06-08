@@ -1,5 +1,4 @@
 import { PageBreadcrumb } from "@/components/breadcrumb";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IPosts } from "@/types";
 import { LeftSide } from "./_components/comments/left-side";
 import { ListComment } from "./_components/comments/list-comment";
@@ -7,6 +6,7 @@ import { ShowDetailPostContent } from "./_components/detail/detail-post-content"
 import { ListRelativePost } from "./_components/relative-posts/list-relative-post";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { AuthDisplay } from "./_components/auth-display";
 
 const fetchPosts = async (slug: string) => {
   const posts = await fetch(`http://localhost:3000/api/posts/${slug}`, {
@@ -48,28 +48,19 @@ export const DetailPostPage = async ({
           <h1 className="scroll-m-20 text-4xl font-mono text-start tracking-tight my-16">
             {post.title}
           </h1>
+
+          {/* Author display */}
           <div className="d-flex justify-start gap-3 mb-10">
-            <div className="flex justify-start items-center gap-3">
-              <Avatar>
-                <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  width={25}
-                  height={25}
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <div className="flex gap-2">
-                <div className="font-bold text-sm">Author name</div> |
-                <div className="text-muted-foreground text-sm">
-                  Sat, 1/06/2024
-                </div>
-              </div>
-            </div>
+            <AuthDisplay />
           </div>
+
+          {/* Detail content */}
           <div className="text-start">
             <ShowDetailPostContent markdown={post.desc} />
           </div>
           <hr />
+
+          {/* Comment section */}
           <h2 className="scroll-m-20 text-3xl font-mono font-semibold text-start mt-16">
             Leave a comment if you like this article!
           </h2>
