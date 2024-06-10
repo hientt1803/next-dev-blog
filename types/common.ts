@@ -18,7 +18,6 @@ export interface IPosts {
   views: number;
   status: POST_STATUS_TYPE;
   user_id?: Id<"users">;
-  cat_id?: Id<"categories">;
   tag_id?: Id<"tags">;
   _creationTime: number;
 }

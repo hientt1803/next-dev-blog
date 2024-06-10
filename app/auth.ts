@@ -1,5 +1,6 @@
-import { auth } from "@clerk/nextjs";
+// import { useAuth } from "@clerk/nextjs";
 
-export async function getAuthToken() {
-  return (await auth().getToken({ template: "convex" })) ?? undefined;
-}
+// export async function getAuthToken() {
+//   const { isLoaded, userId, sessionId, getToken } = useAuth();
+//   return (await getToken({ template: "convex" })) ?? undefined;
+// }

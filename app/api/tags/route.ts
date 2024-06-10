@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 const Response = NextResponse;
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const tags = await fetchQuery(api.tags.getAllTags);
   return Response.json(tags);
 }

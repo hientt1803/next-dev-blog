@@ -25,9 +25,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 
-export const ShowMoreComment = () => {
+export const ShowMoreComment = async () => {
   const [open, setOpen] = useState(false);
-  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const isDesktop = await useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
     return (
@@ -39,7 +39,8 @@ export const ShowMoreComment = () => {
           <DialogHeader>
             <DialogTitle>Edit profile</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
+              Make changes to your profile here. Click save when {"you're"}{" "}
+              done.
             </DialogDescription>
           </DialogHeader>
           <ProfileForm />
@@ -57,7 +58,7 @@ export const ShowMoreComment = () => {
         <DrawerHeader className="text-left">
           <DrawerTitle>Edit profile</DrawerTitle>
           <DrawerDescription>
-            Make changes to your profile here. Click save when you're done.
+            Make changes to your profile here. Click save when {"you're"} done.
           </DrawerDescription>
         </DrawerHeader>
         <ProfileForm className="px-4" />
