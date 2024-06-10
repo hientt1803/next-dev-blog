@@ -20,11 +20,6 @@ export default defineSchema({
     avartar: v.optional(v.string()),
     tokenIdentifier: v.string(),
   }).index("by_tokenIdentifier", ["tokenIdentifier"]),
-  categories: defineTable({
-    slug: v.string(),
-    name: v.string(),
-    desc: v.optional(v.string()),
-  }),
   posts: defineTable({
     slug: v.string(),
     title: v.string(),
@@ -34,13 +29,11 @@ export default defineSchema({
     views: v.number(),
     status: POST_STATUS,
     user_id: v.optional(v.id("users")),
-    cat_id: v.optional(v.id("categories")),
     tag_id: v.optional(v.id("tags")),
-  }).index("by_slug_title_status_catId_tagId", [
+  }).index("by_slug_title_status_tagId", [
     "slug",
     "title",
     "status",
-    "cat_id",
     "tag_id",
   ]),
   comments: defineTable({

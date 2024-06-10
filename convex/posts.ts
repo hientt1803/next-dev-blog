@@ -26,8 +26,9 @@ async function hasAccessPosts(ctx: QueryCtx | MutationCtx, orgId: string) {
 export const getAllPost = query({
   args: {},
   async handler(ctx, args) {
-    const post = await ctx.db.query("posts").collect();
-    return post;
+    const posts = await ctx.db.query("posts").collect();
+
+    return posts;
   },
 });
 
@@ -47,7 +48,7 @@ export const getPostBySlug = query({
   async handler(ctx, args) {
     const post = await ctx.db
       .query("posts")
-      .withIndex("by_slug_title_status_catId_tagId", (q) =>
+      .withIndex("by_slug_title_status_tagId", (q) =>
         q.eq("slug", args.slug)
       )
       .first();
@@ -61,7 +62,7 @@ export const getPostBySlug = query({
 });
 
 export const createPost = mutation({
-  args: { title: v.string(), desc: v.string() },
+  args: { title: v.string(), desc: v.string(), tagId: v.id("tags") },
   async handler(ctx, args) {
     const formattedTitle = args.title.replace(/\s/g, "-").toLowerCase();
     const cleanExcerpt = cleanString(args.desc);
@@ -72,7 +73,7 @@ export const createPost = mutation({
       excerpt: cleanExcerpt,
       desc: args.desc,
       status: "draft",
-      //   user_id: user._id,
+      tag_id: args.tagId,
       views: 0,
       image: "",
     });
@@ -86,7 +87,7 @@ export const updatePostView = mutation({
   handler: async (ctx, args) => {
     const post = await ctx.db
       .query("posts")
-      .withIndex("by_slug_title_status_catId_tagId", (q) =>
+      .withIndex("by_slug_title_status_tagId", (q) =>
         q.eq("slug", args.slug)
       )
       .first();

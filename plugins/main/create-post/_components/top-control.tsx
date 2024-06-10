@@ -25,29 +25,6 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
-
 export const TopControl = ({
   ResetMarkDown,
   saveArticle,
@@ -56,7 +33,6 @@ export const TopControl = ({
   saveArticle: (
     value: string,
     message: string,
-    catId?: Id<"categories"> | undefined,
     tagId?: Id<"tags"> | undefined
   ) => void;
 }) => {
@@ -66,7 +42,6 @@ export const TopControl = ({
   const [open, setOpen] = React.useState(false);
   const [ComboboxValue, setComboboxValue] = React.useState("");
   const [tagId, setTagId] = useState<Id<"tags"> | undefined>(undefined);
-  const [catId, setCatId] = useState<Id<"categories"> | undefined>(undefined);
 
   return (
     <div className="mb-3 flex justify-between gap-2 items-center">
@@ -88,8 +63,7 @@ export const TopControl = ({
               className="w-[200px] justify-between"
             >
               {ComboboxValue
-                ? tags?.find((framework) => framework.name === ComboboxValue)
-                    ?.name
+                ? tags?.find((tag) => tag.name === ComboboxValue)?.name
                 : "Select tags..."}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
@@ -100,27 +74,27 @@ export const TopControl = ({
               <CommandEmpty>No tags found.</CommandEmpty>
               <CommandList>
                 <CommandGroup>
-                  {tags?.map((framework) => (
+                  {tags?.map((tag) => (
                     <CommandItem
-                      key={framework.name}
-                      value={framework.name}
+                      key={tag.name}
+                      value={tag.name}
                       onSelect={(currentValue) => {
                         setComboboxValue(
                           currentValue === ComboboxValue ? "" : currentValue
                         );
                         setOpen(false);
-                        setTagId(framework._id);
+                        setTagId(tag._id);
                       }}
                     >
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          ComboboxValue === framework.name
+                          ComboboxValue === tag.name
                             ? "opacity-100"
                             : "opacity-0"
                         )}
                       />
-                      {framework.name}
+                      {tag.name}
                     </CommandItem>
                   ))}
                 </CommandGroup>
@@ -139,7 +113,6 @@ export const TopControl = ({
             saveArticle(
               value,
               value === "" ? "Please provide post title" : "",
-              catId,
               tagId
             );
           }}

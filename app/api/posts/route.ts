@@ -6,23 +6,19 @@ import { NextRequest, NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 const Response = NextResponse;
 
-interface IPostReq {
-  title: string;
-  desc: string;
-}
-
-export async function GET(req: NextRequest) {
+export async function GET() {
   const listPosts: IPosts[] = await fetchQuery(api.posts.getAllPost);
   return Response.json(listPosts);
 }
 
 export async function POST(req: NextRequest) {
-  const data: IPostReq = await req.json();
+  const data = await req.json();
 
   try {
     await fetchMutation(api.posts.createPost, {
       title: data.title,
       desc: data.desc,
+      tagId: data.tagId,
     });
   } catch (error) {
     console.log(error);

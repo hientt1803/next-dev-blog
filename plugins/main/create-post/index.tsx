@@ -6,6 +6,8 @@ import { ForwardRefEditor } from "./_components/Forward-ref-editor";
 import { TopControl } from "./_components/top-control";
 import { Id } from "@/convex/_generated/dataModel";
 import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
+import { cn, formatDate } from "@/lib/utils";
 
 const admonitionMarkdown = `
   > WRITE YOUR OWN STORY HERE!
@@ -31,7 +33,6 @@ export const CreatePostPageIndex = () => {
   const saveArticle = async (
     value: string,
     message: string,
-    catId?: Id<"categories">,
     tagId?: Id<"tags">
   ) => {
     if (message !== "") {
@@ -39,20 +40,25 @@ export const CreatePostPageIndex = () => {
       return;
     }
 
-    const data = {
-      title: value,
-      desc: String(ref.current?.getMarkdown()),
-      catId,
-      tagId,
-    };
-    await fetch("http://localhost:3000/api/posts", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
+    if (tagId === undefined) {
+      alert("Please provide tag for this article");
+      return;
+    }
 
+    // const data = {
+    //   title: value,
+    //   desc: String(ref.current?.getMarkdown()),
+    //   tagId,
+    // };
+    // await fetch("http://localhost:3000/api/posts", {
+    //   method: "POST",
+    //   body: JSON.stringify(data),
+    // });
+ 
     toast({
       title: "Success: article have been posted successfully",
-      description: new Date().toLocaleDateString(),
+      description: formatDate(Number(new Date())),
+      action: <ToastAction altText="Try again">Close toast</ToastAction>,
     });
   };
 
