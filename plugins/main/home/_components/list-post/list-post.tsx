@@ -1,18 +1,13 @@
 "use client";
 
-import { PostItem } from "./post-item";
-import { usePaginatedQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import { SkeletonLoading } from "@/components/skeleton-loading";
 import { Button } from "@/components/ui/button";
 import { Suspense } from "react";
+import { PostItem } from "./post-item";
+import { usePost } from "@/services/postService";
 
 export const ListPost = () => {
-  const { results, status, loadMore, isLoading } = usePaginatedQuery(
-    api.posts.getAllPostPaginate,
-    {},
-    { initialNumItems: 5 }
-  );
-  // const isLoadingMore = status === "LoadingMore";
+  const { results, status, loadMore, isLoading } = usePost();
 
   return (
     <div id="list-post-home" className="flex-[2]">
@@ -20,17 +15,7 @@ export const ListPost = () => {
         DISCOVER NEW POST HERE
       </h4>
       <div className="grid grid-cols-1 gap-6">
-        {/* {isLoading || isLoadingMore ? (
-          <div>Loading...</div>
-        ) : (
-          <>
-            {results?.map((post, index) => (
-              <PostItem key={index} post={post} />
-            ))}
-          </>
-        )} */}
-
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<SkeletonLoading />}>
           {results?.map((post, index) => <PostItem key={index} post={post} />)}
         </Suspense>
 

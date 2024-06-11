@@ -1,7 +1,5 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { useMediaQuery } from "@/hooks/media-query-hook";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,64 +9,53 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 
-export const ShowMoreComment = async () => {
+export const ShowMoreComment = () => {
   const [open, setOpen] = useState(false);
-  const isDesktop = await useMediaQuery("(min-width: 768px)");
 
-  if (isDesktop) {
-    return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button variant="outline">Show more</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>
-              Make changes to your profile here. Click save when {"you're"}{" "}
-              done.
-            </DialogDescription>
-          </DialogHeader>
-          <ProfileForm />
-        </DialogContent>
-      </Dialog>
-    );
-  }
+  // if (isDesktop) {
+  //   return (
+  //     <Drawer open={open} onOpenChange={setOpen}>
+  //     <DrawerTrigger asChild>
+  //     <Button variant="outline">Show more</Button>
+  //   </DrawerTrigger>
+  //   <DrawerContent>
+  //     <DrawerHeader className="text-left">
+  //       <DrawerTitle>Edit profile</DrawerTitle>
+  //       <DrawerDescription>
+  //         Make changes to your profile here. Click save when {"you're"} done.
+  //       </DrawerDescription>
+  //     </DrawerHeader>
+  //     <ProfileForm className="px-4" />
+  //     <DrawerFooter className="pt-2">
+  //       <DrawerClose asChild>
+  //         <Button variant="outline">Cancel</Button>
+  //       </DrawerClose>
+  //     </DrawerFooter>
+  //   </DrawerContent>
+  // </Drawer>
+  //   );
+  // }
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
         <Button variant="outline">Show more</Button>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader className="text-left">
-          <DrawerTitle>Edit profile</DrawerTitle>
-          <DrawerDescription>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Edit profile</DialogTitle>
+          <DialogDescription>
             Make changes to your profile here. Click save when {"you're"} done.
-          </DrawerDescription>
-        </DrawerHeader>
-        <ProfileForm className="px-4" />
-        <DrawerFooter className="pt-2">
-          <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+          </DialogDescription>
+        </DialogHeader>
+        <ProfileForm />
+      </DialogContent>
+    </Dialog>
   );
 };
 

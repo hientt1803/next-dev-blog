@@ -33,7 +33,9 @@ export const DetailPostPage = async ({
               another post. Thanks you ❤️❤️❤️ !!!
             </h2>
             <div className="flex justify-center items-center gap-3">
-              <Button variant={"default"}>Report this article</Button>
+              <Button variant={"default"}>
+                <Link href="/posts">Report this article</Link>
+              </Button>
               <Button variant={"outline"} asChild>
                 <Link href={"/posts"}>Comback</Link>
               </Button>
@@ -45,13 +47,13 @@ export const DetailPostPage = async ({
           <div className="mb-8">
             <PageBreadcrumb segment="posts" page={`${post.slug}`} />
           </div>
-          <h1 className="scroll-m-20 text-4xl font-mono text-start tracking-tight my-16">
+          <h1 className="scroll-m-20 text-6xl text-start fw-bold tracking-tight my-16">
             {post.title}
           </h1>
 
           {/* Author display */}
-          <div className="d-flex justify-start gap-3 mb-10">
-            <AuthDisplay />
+          <div className="d-flex justify-start items-center gap-3 mb-10">
+            <AuthDisplay user={post.user} creationTime={post._creationTime} />
           </div>
 
           {/* Detail content */}

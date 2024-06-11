@@ -11,3 +11,5 @@ export const formatDate = (dateTime: number): string => {
   // Format the date using date-fns
   return format(date, "MMM dd, yyyy");
 };
+
+export const fetcher = (url: string) => fetch(url).then((res) => res.json());

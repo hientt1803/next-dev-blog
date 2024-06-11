@@ -39,21 +39,23 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <Suspense fallback={<Loading />}>
-          <LenisProvider>
-            <ClerkAuthenticationProvider>
-              <ThemeProvider
-                attribute="class"
-                defaultTheme="system"
-                enableSystem
-                disableTransitionOnChange
-              >
-                {children}
-              </ThemeProvider>
-              <Toaster />
-            </ClerkAuthenticationProvider>
-          </LenisProvider>
-        </Suspense>
+        {/* <RecoilRoot> */}
+          <Suspense fallback={<Loading />}>
+            <LenisProvider>
+              <ClerkAuthenticationProvider>
+                <ThemeProvider
+                  attribute="class"
+                  defaultTheme="system"
+                  enableSystem
+                  disableTransitionOnChange
+                >
+                  {children}
+                </ThemeProvider>
+                <Toaster />
+              </ClerkAuthenticationProvider>
+            </LenisProvider>
+          </Suspense>
+        {/* </RecoilRoot> */}
       </body>
     </html>
   );

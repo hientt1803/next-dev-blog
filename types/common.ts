@@ -9,17 +9,35 @@ import { POST_STATUS_TYPE } from "@/convex/schema";
 // }
 
 export interface IPosts {
-  _id: Id<"posts"> | undefined;
-  slug: string;
-  title: string;
-  excerpt: string;
-  desc: string;
-  image?: string;
-  views: number;
-  status: POST_STATUS_TYPE;
-  user_id?: Id<"users">;
-  tag_id?: Id<"tags">;
   _creationTime: number;
+  _id: Id<"posts">;
+  desc: string;
+  excerpt: string;
+  image?: string;
+  slug: string;
+  status: POST_STATUS_TYPE;
+  tag: {
+    _creationTime: number;
+    _id: Id<"tags">;
+    description: string;
+    name: string;
+    slug: string;
+  };
+  tag_id: string;
+  title: string;
+  user: {
+    _creationTime: number;
+    _id: Id<"users">;
+    avartar: string;
+    bio: string;
+    email: string;
+    full_name: string;
+    password: string;
+    tokenIdentifier: string;
+    username: string;
+  };
+  user_id: string;
+  views: number;
 }
 
 export interface ITags {

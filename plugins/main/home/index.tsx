@@ -1,6 +1,6 @@
-import { ListHostPost } from "@/plugins/main/home/_components/list-post/list-host-post";
 import { ListPost } from "@/plugins/main/home/_components/list-post/list-post";
 import { Overview } from "@/plugins/main/home/_components/overview/overview";
+import { PostTags } from "./_components/post-tags";
 
 const IndexHomePage = () => {
   return (
@@ -8,9 +8,12 @@ const IndexHomePage = () => {
       <Overview />
 
       <div className="container mt-[50px] w-full h-auto">
-        <div className="flex flex-col md:flex-row justify-between flex-wrap gap-6 relative" id="home-list-post">
+        <div
+          className="flex flex-col md:flex-row justify-between flex-wrap gap-6 relative"
+          id="home-list-post"
+        >
           <ListPost />
-          <ListHostPost />
+          <PostTags />
         </div>
       </div>
     </div>

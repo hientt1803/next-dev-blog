@@ -1,6 +1,12 @@
 import { ConvexError, v } from "convex/values";
 import { mutation, MutationCtx, query, QueryCtx } from "./_generated/server";
 import { paginationOptsValidator } from "convex/server";
+import {
+  getAll,
+  getOneFrom,
+  getManyFrom,
+  getManyVia,
+} from "convex-helpers/server/relationships";
 
 async function hasAccessPosts(ctx: QueryCtx | MutationCtx, orgId: string) {
   const identity = await ctx.auth.getUserIdentity();
@@ -33,13 +39,110 @@ export const getAllPost = query({
 });
 
 export const getAllPostPaginate = query({
-  args: { paginationOpts: paginationOptsValidator },
+  args: {
+    paginationOpts: paginationOptsValidator,
+  },
   async handler(ctx, args) {
-    const post = await ctx.db
+    const postsData = await ctx.db
       .query("posts")
       .order("desc")
       .paginate(args.paginationOpts);
-    return post;
+
+    const updatedPosts = await Promise.all(
+      postsData.page.map(async (post) => {
+        const tag = await ctx.db
+          .query("tags")
+          .filter((q) => q.eq(q.field("_id"), post.tag_id))
+          .first();
+
+        const user = await ctx.db
+          .query("users")
+          .filter((q) => q.eq(q.field("_id"), post.user_id))
+          .first();
+
+        if (tag && user) {
+          return { ...post, tag, user };
+        } else {
+          return post;
+        }
+      })
+    );
+
+    return {
+      ...postsData,
+      page: updatedPosts,
+    };
+  },
+});
+
+export const getAllPostPaginateWithParams = query({
+  args: {
+    paginationOpts: paginationOptsValidator,
+    tagId: v.id("tags") || v.string(),
+  },
+  async handler(ctx, args) {
+    if (args.tagId !== undefined) {
+      const postsData = await ctx.db
+        .query("posts")
+        .filter((q) => q.eq(q.field("tag_id"), args.tagId))
+        .order("desc")
+        .paginate(args.paginationOpts);
+
+      const updatedPosts = await Promise.all(
+        postsData.page.map(async (post) => {
+          const tag = await ctx.db
+            .query("tags")
+            .filter((q) => q.eq(q.field("_id"), post.tag_id))
+            .first();
+
+          const user = await ctx.db
+            .query("users")
+            .filter((q) => q.eq(q.field("_id"), post.user_id))
+            .first();
+
+          if (tag && user) {
+            return { ...post, tag, user };
+          } else {
+            return post;
+          }
+        })
+      );
+
+      return {
+        ...postsData,
+        page: updatedPosts,
+      };
+    }
+
+    const postsData = await ctx.db
+      .query("posts")
+      .order("desc")
+      .paginate(args.paginationOpts);
+
+    const updatedPosts = await Promise.all(
+      postsData.page.map(async (post) => {
+        const tag = await ctx.db
+          .query("tags")
+          .filter((q) => q.eq(q.field("_id"), post.tag_id))
+          .first();
+
+        const user = await ctx.db
+          .query("users")
+          .filter((q) => q.eq(q.field("_id"), post.user_id))
+          .first();
+
+        if (tag && user) {
+          return { ...post, tag, user };
+        } else {
+          return post;
+        }
+      })
+    );
+
+    return {
+      ...postsData,
+      page: updatedPosts,
+    };
   },
 });
 
@@ -48,7 +151,7 @@ export const getPostBySlug = query({
   async handler(ctx, args) {
     const post = await ctx.db
       .query("posts")
-      .withIndex("by_slug_title_status_tagId", (q) =>
+      .withIndex("by_slug_title_status_tagId_userId", (q) =>
         q.eq("slug", args.slug)
       )
       .first();
@@ -87,7 +190,7 @@ export const updatePostView = mutation({
   handler: async (ctx, args) => {
     const post = await ctx.db
       .query("posts")
-      .withIndex("by_slug_title_status_tagId", (q) =>
+      .withIndex("by_slug_title_status_tagId_userId", (q) =>
         q.eq("slug", args.slug)
       )
       .first();
@@ -103,10 +206,7 @@ export const updatePostView = mutation({
 
 function cleanString(input: string) {
   let cleaned = input.replace(/[^a-zA-Z0-9\s]/g, " ");
-
   cleaned = cleaned.replace(/\s+/g, " ");
-
   cleaned = cleaned.trim();
-
   return cleaned;
 }

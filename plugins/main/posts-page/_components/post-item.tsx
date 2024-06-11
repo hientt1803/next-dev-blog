@@ -1,3 +1,4 @@
+import { formatDate } from "@/lib/utils";
 import { IPosts } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,12 +7,14 @@ export const PostPageItem = ({ post }: { post: IPosts }) => {
   return (
     <article className="flex max-w-xl flex-col items-start justify-between transition-all shadow-md p-7 hover:shadow-lg hover:scale-105">
       <div className="flex items-center gap-x-4 text-xs">
-        <time className="text-gray-500">Mar 16, 2020</time>
+        <time className="text-gray-500 dark:text-neutral-300">
+          {formatDate(post._creationTime)}
+        </time>
         <Link
           href={`/posts/${post.slug}`}
           className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
         >
-          Marketing
+          {post?.tag?.name}
         </Link>
       </div>
       <div className="group relative">
@@ -37,10 +40,12 @@ export const PostPageItem = ({ post }: { post: IPosts }) => {
           <p className="font-semibold text-gray-900 dark:text-neutral-200">
             <Link href={`/posts/${post.slug}`}>
               <span className="absolute inset-0"></span>
-              Michael Foster
+              {post?.user.full_name ? post?.user.full_name : "Amounious"}
             </Link>
           </p>
-          <p className="text-gray-600">Co-Founder / CTO</p>
+          <p className="text-gray-600 dark:text-neutral-400">
+            {post?.user.email}
+          </p>
         </div>
       </div>
     </article>

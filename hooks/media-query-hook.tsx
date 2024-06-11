@@ -19,5 +19,5 @@ export async function useMediaQuery(query: string) {
     return () => media.removeListener(listener);
   }, [query]);
 
-  return matches;
+  return await matches;
 }

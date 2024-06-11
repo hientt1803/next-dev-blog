@@ -7,7 +7,7 @@ import { IPosts } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
-export async function PostItem({ post }: { post: IPosts }) {
+export function PostItem({ post }: { post: IPosts }) {
   return (
     <>
       <Card className="w-full md:shadow-sm transition-all shadow-md p-3 hover:shadow-lg border-0 z-10 hidden md:block">
@@ -30,7 +30,7 @@ export async function PostItem({ post }: { post: IPosts }) {
                 <span className="text-muted-foreground">
                   {formatDate(post._creationTime)}
                 </span>
-                <Badge variant="secondary">Marketing</Badge>
+                <Badge variant="secondary">{post?.tag?.name}</Badge>
               </div>
               <Link href={`/posts/${post.slug}`}>
                 <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
