@@ -1,6 +1,6 @@
 import { api } from "@/convex/_generated/api";
 import { fetchQuery } from "convex/nextjs";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 const Response = NextResponse;

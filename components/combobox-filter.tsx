@@ -19,10 +19,32 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ITags } from "@/types";
+import { Id } from "@/convex/_generated/dataModel";
 
-export function ComboboxFilter({ tags }: { tags: ITags[] }) {
+export function ComboboxFilter({
+  tags,
+  selectedTag,
+  handleSelectedTag,
+}: {
+  tags: ITags[];
+  selectedTag: Id<"tags"> | undefined;
+  handleSelectedTag: (tagId: Id<"tags">, tagSlug: string) => void;
+}) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState<string | undefined>(
+    selectedTag ? tags.find((tag) => tag._id === selectedTag)?.name : undefined
+  );
+
+  const handleSelect = (currentValue: string) => {
+    setValue((prevValue) =>
+      prevValue === currentValue ? undefined : currentValue
+    );
+    setOpen(false);
+  };
+
+  const displayValue = value
+    ? tags.find((tag) => tag.name === value)?.name
+    : "Choose tags you want...";
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -33,9 +55,7 @@ export function ComboboxFilter({ tags }: { tags: ITags[] }) {
           aria-expanded={open}
           className="w-[400px] justify-between"
         >
-          {value
-            ? tags?.find((tag: ITags) => tag.name === value)?.name
-            : "Choose tags you want..."}
+          {displayValue}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -45,13 +65,13 @@ export function ComboboxFilter({ tags }: { tags: ITags[] }) {
           <CommandEmpty>No tags found.</CommandEmpty>
           <CommandList>
             <CommandGroup>
-              {tags?.map((tag: ITags) => (
+              {tags.map((tag) => (
                 <CommandItem
-                  key={tag.name}
+                  key={tag._id}
                   value={tag.name}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    setOpen(false);
+                  onSelect={() => {
+                    handleSelect(tag.name);
+                    handleSelectedTag(tag._id, tag.slug);
                   }}
                 >
                   <Check

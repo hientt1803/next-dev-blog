@@ -3,7 +3,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 import { ITags } from "@/types";
 
-const ItemTag = ({
+export const TagItem = ({
   tag,
   handleSelectedTag,
 }: {
@@ -13,8 +13,8 @@ const ItemTag = ({
   return (
     <span
       className={cn(
-        badgeVariants({ variant: "outline" }),
-        "px-3 py-1 text-sm cursor-pointer"
+        badgeVariants({ variant: "secondary" }),
+        "text-xl shadow-sm active dark:bg-neutral-600 dark:text-white cursor-pointer"
       )}
       onClick={() => handleSelectedTag(tag._id, tag.slug)}
     >
@@ -22,5 +22,3 @@ const ItemTag = ({
     </span>
   );
 };
-
-export default ItemTag;

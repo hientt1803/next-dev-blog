@@ -1,8 +1,6 @@
 import { PageBreadcrumb } from "@/components/breadcrumb";
 import Link from "next/link";
-import { CategoriesList } from "./_components/categories-list";
-import { ListPost } from "./_components/list-post";
-import ListTags from "./_components/tags/list-tags";
+import ContentWrapper from "./_components/content-wrapper";
 
 const PostPage = async () => {
   return (
@@ -22,22 +20,7 @@ const PostPage = async () => {
           </Link>{" "}
           and share your knowledge.
         </h1>
-        <div className="max-w-[45rem] mx-auto px-auto my-8">
-          <div>
-            <h1 className="scroll-m-20 text-2lg font-bold text-center mx-auto tracking-tight mt-10 mb-4">
-              #Tags
-            </h1>
-            <ListTags />
-          </div>
-        </div>
-        <div className="grid grid-flow-row-dense grid-cols-3 gap-8 relative">
-          <div className="col-span-2">
-            <ListPost />
-          </div>
-          <div>
-            <CategoriesList />
-          </div>
-        </div>
+        <ContentWrapper />
       </div>
     </>
   );

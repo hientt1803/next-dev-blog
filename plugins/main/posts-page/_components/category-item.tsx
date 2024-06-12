@@ -4,25 +4,40 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import Link from "next/link";
+import { Id } from "@/convex/_generated/dataModel";
+import { ITags } from "@/types";
+import { useSearchParams } from "next/navigation";
 
 export const CategoryItem = ({
-  data,
+  listTags,
+  selectedTag,
+  handleSelectedTag,
   title,
 }: {
-  data: any[];
+  listTags: ITags[];
+  selectedTag: Id<"tags"> | undefined;
+  handleSelectedTag: (tagId: Id<"tags">, tagSlug: string) => void;
   title: string;
 }) => {
+  const searchParams = useSearchParams();
+  const selectedTagSlug = searchParams.get("tags");
+
   return (
     <Accordion type="single" collapsible defaultValue={title}>
       <AccordionItem value={`title`}>
         <AccordionTrigger>{title}</AccordionTrigger>
         <AccordionContent>
           <div className="flex justify-start flex-col gap-2">
-            {data.map((item, index) => (
-              <Link key={index} href={item.title}>
-                {item.title}
-              </Link>
+            {listTags.map((item, index) => (
+              <span
+                className={`cursor-pointer hover:underline ${
+                  selectedTagSlug === item.slug ? "font-bold" : ""
+                }`}
+                key={index}
+                onClick={() => handleSelectedTag(item._id, item.slug)}
+              >
+                {item.name}
+              </span>
             ))}
           </div>
         </AccordionContent>

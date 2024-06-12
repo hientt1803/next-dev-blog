@@ -75,67 +75,40 @@ export const getAllPostPaginate = query({
   },
 });
 
-export const getAllPostPaginateWithParams = query({
+export const getAllPostPaginateWithParamsAndSearchTerm = query({
   args: {
     paginationOpts: paginationOptsValidator,
-    tagId: v.id("tags") || v.string(),
+    tagId: v.optional(v.id("tags")),
+    searchTerm: v.optional(v.string()),
   },
   async handler(ctx, args) {
-    if (args.tagId !== undefined) {
-      const postsData = await ctx.db
-        .query("posts")
-        .filter((q) => q.eq(q.field("tag_id"), args.tagId))
-        .order("desc")
-        .paginate(args.paginationOpts);
+    const { tagId, searchTerm, paginationOpts } = args;
+    let query = ctx.db.query("posts");
 
-      const updatedPosts = await Promise.all(
-        postsData.page.map(async (post) => {
-          const tag = await ctx.db
-            .query("tags")
-            .filter((q) => q.eq(q.field("_id"), post.tag_id))
-            .first();
-
-          const user = await ctx.db
-            .query("users")
-            .filter((q) => q.eq(q.field("_id"), post.user_id))
-            .first();
-
-          if (tag && user) {
-            return { ...post, tag, user };
-          } else {
-            return post;
-          }
-        })
-      );
-
-      return {
-        ...postsData,
-        page: updatedPosts,
-      };
+    if (tagId) {
+      query = query.filter((q) => q.eq(q.field("tag_id"), tagId));
     }
 
-    const postsData = await ctx.db
-      .query("posts")
-      .order("desc")
-      .paginate(args.paginationOpts);
+    if (searchTerm) {
+      query = query.filter((q) => q.eq(q.field("title"), searchTerm));
+    }
+
+    const postsData = await query.order("desc").paginate(paginationOpts);
 
     const updatedPosts = await Promise.all(
       postsData.page.map(async (post) => {
-        const tag = await ctx.db
-          .query("tags")
-          .filter((q) => q.eq(q.field("_id"), post.tag_id))
-          .first();
+        const [tag, user] = await Promise.all([
+          ctx.db
+            .query("tags")
+            .filter((q) => q.eq(q.field("_id"), post.tag_id))
+            .first(),
+          ctx.db
+            .query("users")
+            .filter((q) => q.eq(q.field("_id"), post.user_id))
+            .first(),
+        ]);
 
-        const user = await ctx.db
-          .query("users")
-          .filter((q) => q.eq(q.field("_id"), post.user_id))
-          .first();
-
-        if (tag && user) {
-          return { ...post, tag, user };
-        } else {
-          return post;
-        }
+        return { ...post, tag, user };
       })
     );
 
