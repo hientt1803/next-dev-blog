@@ -35,7 +35,7 @@ export const ListPost = ({ results, status, loadMore, isLoading }: any) => {
 
         <Button
           variant={"outline"}
-          onClick={() => loadMore(5)}
+          onClick={() => loadMore(10)}
           disabled={status !== "CanLoadMore"}
         >
           {status !== "CanLoadMore" ? "Run out of article" : "Load More"}

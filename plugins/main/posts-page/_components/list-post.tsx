@@ -24,7 +24,7 @@ export const ListPost = ({ results, status, loadMore, isLoading }: any) => {
           posts. Thanks you ❤️❤️❤️ !!!
         </h2>
       ) : (
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {results?.map((post: IPosts, index: number) => (
             <PostPageItem key={index} post={post} />
           ))}
@@ -34,7 +34,7 @@ export const ListPost = ({ results, status, loadMore, isLoading }: any) => {
       <Button
         variant={"outline"}
         className="w-full mt-5"
-        onClick={() => loadMore(5)}
+        onClick={() => loadMore(10)}
         disabled={status !== "CanLoadMore"}
       >
         {status !== "CanLoadMore" ? "Run out of article" : "Load More"}

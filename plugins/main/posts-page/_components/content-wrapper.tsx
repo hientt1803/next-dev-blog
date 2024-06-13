@@ -35,7 +35,10 @@ const ContentWrapper = () => {
     fetchData();
   }, []);
 
-  const handleSelectedTag = (tagId: Id<"tags"> | undefined, tagSlug: string): void => {
+  const handleSelectedTag = (
+    tagId: Id<"tags"> | undefined,
+    tagSlug: string
+  ): void => {
     setSetselectedTag(tagId);
     window.history.pushState(null, "", `?tags=${tagSlug}`);
   };
@@ -59,7 +62,7 @@ const ContentWrapper = () => {
         </div>
       </div>
       <div className="grid grid-flow-row-dense grid-cols-3 gap-8 relative">
-        <div className="col-span-2">
+        <div className="col-span-3 order-2 lg:order-1 lg:col-span-2">
           <ListPost
             results={results}
             status={status}
@@ -67,7 +70,7 @@ const ContentWrapper = () => {
             isLoading={isLoading}
           />
         </div>
-        <div>
+        <div className="col-span-3 order-1 lg:order-2 lg:col-span-1">
           <CategoriesList
             listTags={listTags}
             selectedTag={selectedTag}

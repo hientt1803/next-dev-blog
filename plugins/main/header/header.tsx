@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MainNav } from "./_components/main-nav";
 import MobileNav from "./_components/mobile-nax";
 import { cn } from "@/lib/utils";
+import SearchArticle from "./_components/search-article";
 
 export const MainHeader = () => {
   const { theme } = useTheme();
@@ -17,11 +18,14 @@ export const MainHeader = () => {
       )}
     >
       <div className="container flex justify-between items-center">
-        <Link href="/" className="text-xl font-bold tracking-tight">
+        <Link href="/" className="font-bold text-2xl">
           Next-dev
         </Link>
 
-        <MainNav />
+        <div className="flex gap-2 items-center text-xl tracking-tight">
+          <SearchArticle />
+          <MainNav />
+        </div>
 
         <div className="md:hidden">
           <MobileNav />

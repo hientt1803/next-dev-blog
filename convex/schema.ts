@@ -30,13 +30,18 @@ export default defineSchema({
     status: POST_STATUS,
     user_id: v.optional(v.id("users")),
     tag_id: v.optional(v.id("tags")),
-  }).index("by_slug_title_status_tagId_userId", [
-    "slug",
-    "title",
-    "status",
-    "tag_id",
-    "user_id",
-  ]),
+  })
+    .searchIndex("search_title_desc_slug", {
+      searchField: "title",
+      filterFields: ["title", "desc", "slug"],
+    })
+    .index("by_slug_title_status_tagId_userId", [
+      "slug",
+      "title",
+      "status",
+      "tag_id",
+      "user_id",
+    ]),
   comments: defineTable({
     post_id: v.id("posts"),
     user_id: v.id("users"),

@@ -1,12 +1,6 @@
 import { ConvexError, v } from "convex/values";
 import { mutation, MutationCtx, query, QueryCtx } from "./_generated/server";
 import { paginationOptsValidator } from "convex/server";
-import {
-  getAll,
-  getOneFrom,
-  getManyFrom,
-  getManyVia,
-} from "convex-helpers/server/relationships";
 
 async function hasAccessPosts(ctx: QueryCtx | MutationCtx, orgId: string) {
   const identity = await ctx.auth.getUserIdentity();
@@ -75,7 +69,7 @@ export const getAllPostPaginate = query({
   },
 });
 
-export const getAllPostPaginateWithParamsAndSearchTerm = query({
+export const getAllPostPaginateWithTagIdAndSearchTerm = query({
   args: {
     paginationOpts: paginationOptsValidator,
     tagId: v.optional(v.id("tags")),
@@ -83,17 +77,79 @@ export const getAllPostPaginateWithParamsAndSearchTerm = query({
   },
   async handler(ctx, args) {
     const { tagId, searchTerm, paginationOpts } = args;
-    let query = ctx.db.query("posts");
+    let postsQuery = ctx.db.query("posts");
 
     if (tagId) {
-      query = query.filter((q) => q.eq(q.field("tag_id"), tagId));
+      postsQuery = postsQuery.filter((q) => q.eq(q.field("tag_id"), tagId));
+    }
+
+    if (searchTerm && tagId) {
+      const postsQueryWithSearchTerm = ctx.db
+        .query("posts")
+        .withSearchIndex("search_title_desc_slug", (q) =>
+          q.search("title", searchTerm)
+        )
+        .filter((q) => q.eq(q.field("tag_id"), tagId));
+
+      const postsData = await postsQueryWithSearchTerm.paginate(paginationOpts);
+
+      const updatedData = await Promise.all(
+        postsData.page.map(async (post) => {
+          const [tag, user] = await Promise.all([
+            ctx.db
+              .query("tags")
+              .filter((q) => q.eq(q.field("_id"), post.tag_id))
+              .first(),
+            ctx.db
+              .query("users")
+              .filter((q) => q.eq(q.field("_id"), post.user_id))
+              .first(),
+          ]);
+
+          return { ...post, tag, user };
+        })
+      );
+
+      return {
+        ...postsData,
+        page: updatedData,
+      };
     }
 
     if (searchTerm) {
-      query = query.filter((q) => q.eq(q.field("title"), searchTerm));
+      const postsQueryWithSearchTerm = ctx.db
+        .query("posts")
+        .withSearchIndex("search_title_desc_slug", (q) =>
+          q.search("title", searchTerm)
+        );
+      // .filter((q) => q.eq(q.field("tag_id"), tagId));
+
+      const postsData = await postsQueryWithSearchTerm.paginate(paginationOpts);
+
+      const updatedData = await Promise.all(
+        postsData.page.map(async (post) => {
+          const [tag, user] = await Promise.all([
+            ctx.db
+              .query("tags")
+              .filter((q) => q.eq(q.field("_id"), post.tag_id))
+              .first(),
+            ctx.db
+              .query("users")
+              .filter((q) => q.eq(q.field("_id"), post.user_id))
+              .first(),
+          ]);
+
+          return { ...post, tag, user };
+        })
+      );
+
+      return {
+        ...postsData,
+        page: updatedData,
+      };
     }
 
-    const postsData = await query.order("desc").paginate(paginationOpts);
+    const postsData = await postsQuery.order("desc").paginate(paginationOpts);
 
     const updatedPosts = await Promise.all(
       postsData.page.map(async (post) => {
@@ -116,6 +172,25 @@ export const getAllPostPaginateWithParamsAndSearchTerm = query({
       ...postsData,
       page: updatedPosts,
     };
+  },
+});
+
+export const getAllPostByTitle = query({
+  args: {
+    searchTerm: v.optional(v.string()),
+  },
+  async handler(ctx, args) {
+    const { searchTerm } = args;
+
+    // if (searchTerm) {
+    //   return await ctx.db
+    //     .query("posts")
+    //     .withSearchIndex("search_title_desc_slug", (q) =>
+    //       q.search("title", searchTerm)
+    //     ).collect();
+    // }
+
+    return await ctx.db.query("posts").collect();
   },
 });
 
