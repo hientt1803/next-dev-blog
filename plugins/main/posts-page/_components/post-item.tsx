@@ -3,7 +3,7 @@ import { IPosts } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
-export const PostPageItem = ({ post }: { post: IPosts }) => {
+export const PostPageItem = ({ post }: { post: any }) => {
   return (
     <article className="flex max-w-xl flex-col items-start justify-between transition-all shadow-md p-7 hover:shadow-lg hover:scale-105">
       <div className="flex items-center gap-x-4 text-xs">
