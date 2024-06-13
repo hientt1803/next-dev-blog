@@ -1,5 +1,7 @@
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { IPosts } from "@/types";
+import { fetchQuery } from "convex/nextjs";
 import { usePaginatedQuery } from "convex/react";
 
 export function usePost() {
@@ -19,9 +21,9 @@ export function usePost() {
 
 export function GetPostsWithTagId(tagId?: Id<"tags">, searchTerm?: string) {
   const { results, status, loadMore, isLoading } = usePaginatedQuery(
-    api.posts.getAllPostPaginateWithParamsAndSearchTerm,
+    api.posts.getAllPostPaginateWithTagIdAndSearchTerm,
     { tagId: tagId, searchTerm: searchTerm },
-    { initialNumItems: 5 }
+    { initialNumItems: 10 }
   );
 
   return {
@@ -30,4 +32,9 @@ export function GetPostsWithTagId(tagId?: Id<"tags">, searchTerm?: string) {
     loadMore,
     isLoading,
   };
+}
+
+export async function getAllPostByTitle(): Promise<IPosts[]> {
+  const results = await fetchQuery(api.posts.getAllPost);
+  return results as unknown as IPosts[];
 }

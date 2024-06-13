@@ -8,10 +8,8 @@ export const ListRelativePost = () => {
 
   return (
     <div className="w-full h-auto mt-2">
-      <div className="grid grid-cols-2 gap-6">
-        {results.map((post) => (
-          <PostPageItem key={post._id} post={post} />
-        ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {results?.map((post) => <PostPageItem key={post._id} post={post} />)}
       </div>
     </div>
   );
