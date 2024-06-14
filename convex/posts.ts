@@ -46,12 +46,12 @@ export const getAllPostPaginate = query({
       postsData.page.map(async (post) => {
         const tag = await ctx.db
           .query("tags")
-          .filter((q) => q.eq(q.field("_id"), post.tag_id))
+          .filter((q) => q.eq(q.field("_id"), post.tagId))
           .first();
 
         const user = await ctx.db
           .query("users")
-          .filter((q) => q.eq(q.field("_id"), post.user_id))
+          .filter((q) => q.eq(q.field("_id"), post.userId))
           .first();
 
         if (tag && user) {
@@ -80,7 +80,7 @@ export const getAllPostPaginateWithTagIdAndSearchTerm = query({
     let postsQuery = ctx.db.query("posts");
 
     if (tagId) {
-      postsQuery = postsQuery.filter((q) => q.eq(q.field("tag_id"), tagId));
+      postsQuery = postsQuery.filter((q) => q.eq(q.field("tagId"), tagId));
     }
 
     if (searchTerm && tagId) {
@@ -89,7 +89,7 @@ export const getAllPostPaginateWithTagIdAndSearchTerm = query({
         .withSearchIndex("search_title_desc_slug", (q) =>
           q.search("title", searchTerm)
         )
-        .filter((q) => q.eq(q.field("tag_id"), tagId));
+        .filter((q) => q.eq(q.field("tagId"), tagId));
 
       const postsData = await postsQueryWithSearchTerm.paginate(paginationOpts);
 
@@ -98,11 +98,11 @@ export const getAllPostPaginateWithTagIdAndSearchTerm = query({
           const [tag, user] = await Promise.all([
             ctx.db
               .query("tags")
-              .filter((q) => q.eq(q.field("_id"), post.tag_id))
+              .filter((q) => q.eq(q.field("_id"), post.tagId))
               .first(),
             ctx.db
               .query("users")
-              .filter((q) => q.eq(q.field("_id"), post.user_id))
+              .filter((q) => q.eq(q.field("_id"), post.userId))
               .first(),
           ]);
 
@@ -131,11 +131,11 @@ export const getAllPostPaginateWithTagIdAndSearchTerm = query({
           const [tag, user] = await Promise.all([
             ctx.db
               .query("tags")
-              .filter((q) => q.eq(q.field("_id"), post.tag_id))
+              .filter((q) => q.eq(q.field("_id"), post.tagId))
               .first(),
             ctx.db
               .query("users")
-              .filter((q) => q.eq(q.field("_id"), post.user_id))
+              .filter((q) => q.eq(q.field("_id"), post.userId))
               .first(),
           ]);
 
@@ -156,11 +156,11 @@ export const getAllPostPaginateWithTagIdAndSearchTerm = query({
         const [tag, user] = await Promise.all([
           ctx.db
             .query("tags")
-            .filter((q) => q.eq(q.field("_id"), post.tag_id))
+            .filter((q) => q.eq(q.field("_id"), post.tagId))
             .first(),
           ctx.db
             .query("users")
-            .filter((q) => q.eq(q.field("_id"), post.user_id))
+            .filter((q) => q.eq(q.field("_id"), post.userId))
             .first(),
         ]);
 
@@ -194,12 +194,24 @@ export const getAllPostByTitle = query({
   },
 });
 
+export const getRelatedPost = query({
+  args: { tagId: v.id("tags") },
+  async handler(ctx, args) {
+    // const relatedPost = await ctx.db
+    //   .query("posts")
+    //   .withIndex("by_tagId", args.tagId)
+    //   .collect();
+
+    // return relatedPost;
+  },
+});
+
 export const getPostBySlug = query({
   args: { slug: v.string() },
   async handler(ctx, args) {
     const post = await ctx.db
       .query("posts")
-      .withIndex("by_slug_title_status_tagId_userId", (q) =>
+      .withIndex("by_slug", (q) =>
         q.eq("slug", args.slug)
       )
       .first();
@@ -224,7 +236,7 @@ export const createPost = mutation({
       excerpt: cleanExcerpt,
       desc: args.desc,
       status: "draft",
-      tag_id: args.tagId,
+      tagId: args.tagId,
       views: 0,
       image: "",
     });
@@ -238,7 +250,7 @@ export const updatePostView = mutation({
   handler: async (ctx, args) => {
     const post = await ctx.db
       .query("posts")
-      .withIndex("by_slug_title_status_tagId_userId", (q) =>
+      .withIndex("by_slug", (q) =>
         q.eq("slug", args.slug)
       )
       .first();

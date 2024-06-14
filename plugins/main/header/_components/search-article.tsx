@@ -41,7 +41,12 @@ const SearchArticle = () => {
 
   return (
     <div>
-      <span className="text-sm text-muted-foreground">
+      <span
+        className="text-sm text-muted-foreground"
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
         Press{" "}
         <kbd className="pointer-events-none inline-flex h-5 mx-2 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
           <span className="text-xs">⌘</span>+ K
@@ -60,14 +65,14 @@ const SearchArticle = () => {
                   value={post.slug}
                   onSelect={() => {
                     route.push(`http://localhost:3000/posts/${post.slug}`);
-                    setOpen(false)
+                    setOpen(false);
                   }}
                 >
                   <div
                     className="flex flex-col"
                     onClick={() => {
                       route.push(`http://localhost:3000/posts/${post.slug}`);
-                      setOpen(false)
+                      setOpen(false);
                     }}
                   >
                     <span className="text-xl font-bold line-clamp-1">

@@ -16,26 +16,10 @@ export interface IPosts {
   image?: string;
   slug: string;
   status: POST_STATUS_TYPE;
-  tag: {
-    _creationTime: number;
-    _id: Id<"tags">;
-    description: string;
-    name: string;
-    slug: string;
-  };
+  tag: ITags;
   tag_id: string;
   title: string;
-  user: {
-    _creationTime: number;
-    _id: Id<"users">;
-    avartar: string;
-    bio: string;
-    email: string;
-    full_name: string;
-    password: string;
-    tokenIdentifier: string;
-    username: string;
-  };
+  user: IUsers;
   user_id: string;
   views: number;
 }
@@ -45,6 +29,18 @@ export interface ITags {
   slug: string;
   name: string;
   desc: string;
+  _creationTime: number;
+}
+
+export interface IUsers {
+  _id: Id<"users">;
+  username: string;
+  full_name: string;
+  email: string;
+  password: string;
+  bio: string;
+  avartar: string;
+  tokenIdentifier: string;
   _creationTime: number;
 }
 

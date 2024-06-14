@@ -20,7 +20,7 @@ export const ShowDetailPostContent = ({ markdown }: { markdown: string }) => {
 
   return (
     <>
-      <div className="">
+      <div>
         <div
           className="prose min-w-full dark:dark-blog-content"
           dangerouslySetInnerHTML={{ __html: htmlContent }}
