@@ -7,13 +7,19 @@ import { ListRelativePost } from "./_components/relative-posts/list-relative-pos
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AuthDisplay } from "./_components/auth-display";
+import { fetchMutation, fetchQuery } from "convex/nextjs";
+import { api } from "@/convex/_generated/api";
 
 const fetchPosts = async (slug: string) => {
-  const posts = await fetch(`http://localhost:3000/api/posts/${slug}`, {
-    next: { revalidate: 60 },
+  const post = await fetchQuery(api.posts.getPostBySlug, {
+    slug: slug,
   });
-  const data = await posts.json();
-  return data;
+
+  await fetchMutation(api.posts.updatePostView, {
+    slug: slug,
+  });
+
+  return post;
 };
 
 export const DetailPostPage = async ({
@@ -21,7 +27,7 @@ export const DetailPostPage = async ({
 }: {
   params: { slug: string };
 }) => {
-  const post: IPosts = await fetchPosts(params.slug);
+  const post: any = await fetchPosts(params.slug);
 
   return (
     <div className="mt-[50px]">
