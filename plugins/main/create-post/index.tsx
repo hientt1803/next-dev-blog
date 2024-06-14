@@ -45,15 +45,15 @@ export const CreatePostPageIndex = () => {
       return;
     }
 
-    // const data = {
-    //   title: value,
-    //   desc: String(ref.current?.getMarkdown()),
-    //   tagId,
-    // };
-    // await fetch("http://localhost:3000/api/posts", {
-    //   method: "POST",
-    //   body: JSON.stringify(data),
-    // });
+    const data = {
+      title: value,
+      desc: String(ref.current?.getMarkdown()),
+      tagId,
+    };
+    await fetch("http://localhost:3000/api/posts", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
  
     toast({
       title: "Success: article have been posted successfully",
